@@ -1,0 +1,14 @@
+{
+  "name": "advent-of-code2021",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ryan Wise <ryan.wise@zendesk.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
+    "jest": "^27.4.3"
+  },
+  "scripts": {
+    "test": "jest --config=jest.config.js"
+  }
+}
