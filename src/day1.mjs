@@ -1,36 +1,43 @@
-import {readInput} from './input.mjs'
-import path from 'path'
+import { readInput } from "./input.mjs";
+import path from "path";
+
 const __dirname = path.resolve();
-
-const text = readInput(path.join(__dirname, '/input/day1_input.txt'))
 // const text = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263"
-const arr = text.split('\n')
+const text = readInput(path.join(__dirname, "/input/day1_input.txt"));
+const arr = text.split("\n").map((number) => {
+  return parseInt(number);
+});
 
-let count = 0
-let areSmaller = []
+export const dayOnePartOne = function () {
+  let count = 0;
 
-for (let index = 1; index < arr.length; index++) {
-  if (arr[index] > arr[index-1]){
-    count++
-  } else {
-    areSmaller.push([arr[index-1], arr[index]])
+  for (let index = 1; index < arr.length; index++) {
+    if (arr[index] > arr[index - 1]) {
+      count++;
+    }
   }
-}
 
-// arr.forEach((el, index) => {
-//   let loop = `index:${index}, elem:${el}, prev:${arr[index-1]}`
-//   if (index === 0) {
-//     console.log(loop);
-//     return
-//   }
+  console.log(
+    `There are ${arr.length} items, and ${count} of them are larger than their predecessor.`
+  );
+  return count;
+};
 
-//   if (el > arr[index-1]){
-//     console.log((loop + `, HIGHER`));
-//     count++
-//   } else {
-//     console.log(loop + `, LOWER`);
-//   }
-// });
-console.log(arr.length);
-console.log(areSmaller)
-console.log(count)
+export const dayOnePartTwo = function () {
+  let count = 0;
+  let previous = 0;
+  let current = 0;
+
+  for (let index = 2; index < arr.length; index++) {
+    previous = current;
+    current = arr[index] + arr[index - 1] + arr[index - 2];
+    if (previous != 0 && current > previous) {
+      count++;
+    }
+  }
+
+  console.log(
+    `There are ${arr.length} items, and ${count} of them are larger than their predecessor.`
+  );
+  return count;
+};
