@@ -27,6 +27,23 @@ function executeCommand(coordinates, command) {
   }
   return coordinates;
 }
+function executeAdvancedCommand(coordinates, command) {
+  switch (command[0]) {
+    case "forward":
+      coordinates["position"] += command[1];
+      coordinates["depth"] += (command[1] * coordinates["aim"])
+      break;
+    case "up":
+      coordinates["aim"] -= command[1];
+      break;
+    case "down":
+      coordinates["aim"] += command[1];
+      break;
+    default:
+      break;
+  }
+  return coordinates;
+}
 
 const commands = input.split("\n").map((command) => formatCommand(command));
 
@@ -40,6 +57,17 @@ export const dayTwoPartOne = function () {
   return (coordinates.depth * coordinates.position)
 };
 
+export const dayTwoPartTwo = function () {
+  let coordinates = { position: 0, depth: 0, aim: 0 }
+  commands.forEach((command) => {
+    coordinates = executeAdvancedCommand(coordinates, command);
+  });
+
+  console.log(coordinates);
+  return (coordinates.depth * coordinates.position)
+}
+
 // console.log(commands);
 // console.log(commands.length);
 console.log(dayTwoPartOne());
+console.log(dayTwoPartTwo());
