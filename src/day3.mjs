@@ -9,25 +9,32 @@ const arr = input.split("\n").map((binaryNumber) => {
   return Array.from(binaryNumber);
 });
 
-export const dayThreePartOne = function () {
-  let input_length = arr.length;
-  let counter = [];
-  let gamma_rate = "";
-  let epsilon_rate = "";
+console.log(arr);
 
-  arr.forEach((binaryNumber) => {
+function countPositiveBits(arrayOfBinaries) {
+  let bitCounter = [];
+
+  arrayOfBinaries.forEach((binaryNumber) => {
     binaryNumber.forEach((bit, index) => {
-      if (typeof counter[index] === "undefined") {
-        counter.push(0);
+      // Ensure array index exists
+      if (typeof bitCounter[index] === "undefined") {
+        bitCounter.push(0);
       }
       if (parseInt(bit) === 1) {
-        counter[index] += 1;
+        bitCounter[index] += 1;
       }
     });
   });
 
-  counter.forEach((numBits) => {
-    if (numBits > input_length / 2) {
+  return bitCounter;
+}
+
+function findRates(bitTally, numberOfInputs) {
+  let gamma_rate = "";
+  let epsilon_rate = "";
+
+  bitTally.forEach((numBits) => {
+    if (numBits > numberOfInputs / 2) {
       gamma_rate += 1;
       epsilon_rate += 0;
     } else {
@@ -36,12 +43,17 @@ export const dayThreePartOne = function () {
     }
   });
 
-  console.log(`counter: ${counter}`);
-  console.log(`gamma: ${gamma_rate}, epsilon: ${epsilon_rate}`);
+  return [parseInt(gamma_rate, 2), parseInt(epsilon_rate, 2)];
+}
 
-  gamma_rate = parseInt(gamma_rate, 2);
-  epsilon_rate = parseInt(epsilon_rate, 2);
+export const dayThreePartOne = function () {
+  let input_length = arr.length;
+  let bitCounter = countPositiveBits(arr);
+  let [gamma_rate, epsilon_rate] = findRates(bitCounter, input_length);
   let power_consumption = gamma_rate * epsilon_rate;
+
+  console.log(`counter: ${bitCounter}`);
+  console.log(`gamma: ${gamma_rate}, epsilon: ${epsilon_rate}`);
 
   console.log(
     `gamma: ${gamma_rate}, epsilon: ${epsilon_rate}, power consumption: ${power_consumption}`
